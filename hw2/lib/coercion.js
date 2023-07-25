@@ -1,4 +1,4 @@
-function addValues(arg1, arg2) {
+export function addValues(arg1, arg2) {
     switch (typeof arg1) {
         case "number":
             switch (typeof arg2) {
@@ -34,32 +34,16 @@ function addValues(arg1, arg2) {
     }
 }
 
-// console.log(addValues(null, 3))
-console.log(addValues(5n, 7))
-console.log(addValues("test", 123))
-console.log(addValues(12, 34))
-
-function stringifyValue(arg1) {
+export function stringifyValue(arg1) {
     switch (typeof arg1) {
         case "object":
             return arg1 !== null ? JSON.stringify(arg1) : "null"
-        case "string":
-            return arg1;
-        case "number":
-        case "boolean":
-            return String(arg1);
         default:
-            return arg1.toString()
+            return String(arg1)
     }
 }
 
-console.log(typeof stringifyValue(13))
-console.log(stringifyValue("test"))
-console.log(stringifyValue(true))
-console.log(stringifyValue({name: "Kamron"}))
-console.log(stringifyValue(null))
-
-function invertBoolean(arg1) {
+export function invertBoolean(arg1) {
     if (typeof arg1 === "boolean") {
         return !arg1
     } else {
@@ -67,44 +51,33 @@ function invertBoolean(arg1) {
     }
 }
 
-console.log(invertBoolean(true))
-
-function convertToNumber(arg1) {
+export function convertToNumber(arg1) {
     switch (typeof arg1) {
         case "number":
             return arg1
         case "string":
-            const value = parseInt(arg1)
+            const value = parseInt(arg1) //we can also use parseFloat
             if (Number.isNaN(value)) {
-                throw new Error("cannot convert value to number")
+                throw new Error("cannot convert given string to number")
             }
-        case "bigint", "boolean":
-            Number(arg1)
-        case "object":
-            if (arg1 === null) {
-                throw new Error("cannot convert value to number");
-            }
+            return value;
+        case "boolean":
+            return arg1 ? 1 : 0;
+        case "bigint":
+            return Number(arg1)
         default:
-            const defaultValue = Number(arg1);
-            if (Number.isNaN(defaultValue)) {
-                throw new Error("cannot convert value to number");
-            }
-            return defaultValue;
+            throw new Error("cannot convert value to number");
     }
 }
 
-console.log(typeof convertToNumber("13"))
-console.log(convertToNumber(98n))
-console.log(convertToNumber(true))
-
-function coerceToType(value, type) {
+export function coerceToType(value, type) {
     switch (type) {
         case "string":
-            return String(value)
+            return stringifyValue(value)
         case "number":
-            return Number(value)
+            return convertToNumber(value)
         case "boolean":
-            return Boolean(value);
+            return value ? true : false;
         case "object":
             return JSON.parse(value)
         case "bigint":
@@ -114,14 +87,9 @@ function coerceToType(value, type) {
     }
 }
 
-console.log(coerceToType(13, "bigint"))
-console.log(coerceToType(0, "boolean"))
-
-function stringToBinary(inputString) {
-  return inputString
-    .split('')
-    .map(char => char.charCodeAt(0).toString(2))
-    .join(' ');
+export function stringToBinary(inputString) {
+    return inputString
+        .split('')
+        .map(char => char.charCodeAt(0).toString(2))
+        .join(' ');
 }
-
-console.log(stringToBinary('solvd'));
