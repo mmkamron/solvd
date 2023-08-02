@@ -56,16 +56,19 @@ const splitIntoWords = (text) => {
     if (typeof text !== "string") {
         throw new Error("Invalid input: given text should be of type string")
     }
-    return text.split(/\s+/)
+    return text.toLowerCase().split(/\s+/)
 };
 const uniqueArray = (arr) => [...new Set(arr)];
-const sortAlphabetically = (arr) => arr.sort();
+const sortAlphabetically = (arr) => {
+    return arr.sort();
+}
+
 
 const filterUniqueWords = (text) => {
     return sortAlphabetically(uniqueArray(splitIntoWords(text)))
 }
 
-console.log(filterUniqueWords("mouse monitor mouse keyboard headphones keyboard"))
+console.log(filterUniqueWords("mouse monitor mouse keyboard headphones Keyboard"))
 
 
 const grades = (students) => students.flatMap((student) => student.grades);
