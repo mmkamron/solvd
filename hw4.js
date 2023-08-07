@@ -4,6 +4,9 @@ const person = {
     lastName: "Doe",
     age: 30,
     email: "john.doe@example.com",
+    street: {
+        name: "bla"
+    },
     updateInfo(info) {
         Object.keys(info).forEach((prop) => {
             if (person.hasOwnProperty(prop)) {
@@ -156,3 +159,51 @@ const callback = (prop, action) => {
 // const observePerson = observeObject(person, callback)
 // observePerson.age = 21
 // console.log(observePerson)
+
+
+// #6
+
+const deepCloneObject = (obj) => {
+    if (typeof obj !== 'object' || obj === null) {
+        return obj;
+    }
+    const clone = Array.isArray(obj) ? [] : {}
+
+    return Object.keys(obj).reduce((acc, key) => {
+        acc[key] = deepCloneObject(obj[key]);
+        return acc
+    }, clone)
+}
+
+// const cloned = deepCloneObject(person);
+// cloned.age = 25;
+// console.log(person.age)
+// console.log(cloned.age)
+
+
+// #7
+const validateObject = (obj, schema) => {
+    for (const prop in schema) {
+        if (!(prop in obj)) {
+            return false;
+        }
+        for (const prop in obj) {
+            if (typeof obj[prop] !== schema[prop].type) {
+                return false
+            } else if (prop === "age") {
+                return obj[prop] > schema[prop].min
+            }
+        }
+        return true
+    }
+}
+// const validation = {
+//     name: { type: "string" },
+//     age: { type: "number", min: 18}
+// }
+//
+// const person1 = {
+//     name: "Kamron",
+//     age: 17,
+// }
+// console.log(validateObject(person1, validation))
