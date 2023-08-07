@@ -5,14 +5,15 @@ const person = {
     age: 30,
     email: "john.doe@example.com",
     street: {
-        name: "bla"
+        name: "blabla"
     },
     updateInfo(info) {
         Object.keys(info).forEach((prop) => {
-            if (person.hasOwnProperty(prop)) {
-                Object.defineProperty(person, prop, {
+            if (this.hasOwnProperty(prop)) {
+                Object.defineProperty(this, prop, {
                     value: info[prop],
-                    writeable: false,
+                    writable: false,
+                    configurable: false
                 })
             }
         })
@@ -22,6 +23,7 @@ const person = {
 Object.keys(person).forEach((prop) => {
     Object.defineProperty(person, prop, {
         writable: false,
+        configurable: false
     })
 })
 
@@ -29,17 +31,14 @@ Object.defineProperty(person, "address", {
     value: {},
     writable: true,
     enumerable: false,
-    configurable: false
+    configurable: true
 })
 
 person.updateInfo({
-    firstName: "Kamron",
-    age: 20,
+    address: { street: "Wall" }
 })
 
-person.address = { street: "Grójecka" }
-
-// console.log(`${person.firstName} is ${person.age} years old. He lives in ${person.address.street} street`)
+console.log(`${person.firstName} is ${person.age} years old. He lives in ${person.address.street} street`)
 
 
 // #2
