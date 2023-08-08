@@ -1,27 +1,34 @@
 // #1
 const customFilterUnique = (arr, cb) => {
-    const unique = [];
-
+    const uniqueSet = new Set();
     for (const elem of arr) {
-        if (!unique.some(item => cb(item, elem))) {
-            unique.push(elem);
+        if (cb(elem)) {
+            uniqueSet.add(elem)
         }
     }
-
-    return unique;
+    return [...uniqueSet];
 }
 
-const filter = (a, b) => a.fruit === b.fruit
+const priceFilter = (elem) => {
+    if (elem.price > 3) {
+        return true
+    }
+    return false
+}
 
-// const objects = [
-//     { id: 1, fruit: 'apple' },
-//     { id: 2, fruit: 'orange' },
-//     { id: 3, fruit: 'apple' },
-//     { id: 4, fruit: 'grape' },
-//     { id: 5, fruit: 'banana' }
+
+// const fruits = [
+//     { name: "Apple", price: 3.5 },
+//     { name: "Banana", price: 2.0 },
+//     { name: "Kiwi", price: 4.0 },
+//     { name: "Orange", price: 6.0 },
+//     { name: "Grapefruit", price: 2.5 }
 // ];
+//
+// console.log(customFilterUnique(fruits, priceFilter))
 
-// console.log(customFilterUnique(objects, filter))
+// const nums = [3, 5, 10, 3, 7, 5, 13, 10]
+// console.log(customFilterUnique(nums, num => num > 3))
 
 
 // #2
