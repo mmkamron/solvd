@@ -9,23 +9,17 @@ const customFilterUnique = (arr, cb) => {
     return [...uniqueSet];
 }
 
-const priceFilter = (elem) => {
-    if (elem.price > 3) {
-        return true
-    }
-    return false
-}
+const priceFilter = (elem) => elem.price > 3
 
+const fruits = [
+    { name: "Apple", price: 3.5 },
+    { name: "Banana", price: 2.0 },
+    { name: "Kiwi", price: 4.0 },
+    { name: "Orange", price: 6.0 },
+    { name: "Grapefruit", price: 2.5 }
+];
 
-// const fruits = [
-//     { name: "Apple", price: 3.5 },
-//     { name: "Banana", price: 2.0 },
-//     { name: "Kiwi", price: 4.0 },
-//     { name: "Orange", price: 6.0 },
-//     { name: "Grapefruit", price: 2.5 }
-// ];
-//
-// console.log(customFilterUnique(fruits, priceFilter))
+console.log(customFilterUnique(fruits, priceFilter))
 
 // const nums = [3, 5, 10, 3, 7, 5, 13, 10]
 // console.log(customFilterUnique(nums, num => num > 3))
