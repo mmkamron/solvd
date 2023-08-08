@@ -9,12 +9,16 @@ const person = {
     },
     updateInfo(info) {
         Object.keys(info).forEach((prop) => {
-            if (this.hasOwnProperty(prop)) {
+            const propDesc = Object.getOwnPropertyDescriptor(this, prop);
+            if (this.hasOwnProperty(prop) && propDesc.configurable) {
                 Object.defineProperty(this, prop, {
                     value: info[prop],
                     writable: false,
-                    configurable: false
+                    configurable: true
                 })
+            }
+            else {
+                throw new Error(`property ${prop} is non-configurable`)
             }
         })
     }
@@ -23,20 +27,23 @@ const person = {
 Object.keys(person).forEach((prop) => {
     Object.defineProperty(person, prop, {
         writable: false,
-        configurable: false
+        configurable: true
     })
 })
 
 Object.defineProperty(person, "address", {
     value: {},
-    writable: true,
+    writable: false,
     enumerable: false,
-    configurable: true
+    configurable: false,
 })
 
 person.updateInfo({
-    address: { street: "Wall" }
+    firstName: "Kamron",
+    address: { street: "Wall" } // throws an error because it's non-configurable
 })
+
+// person.address = { street: "Wall" } // throws an error because it's non-writable
 
 console.log(`${person.firstName} is ${person.age} years old. He lives in ${person.address.street} street`)
 
