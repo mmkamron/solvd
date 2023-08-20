@@ -96,5 +96,48 @@ inputElement.addEventListener("input", event => {
 
 // #5
 const throttle = (func, interval) => {
+    let lastTimeout = 0;
 
+    return function(...args) {
+        let currentTime = Date.now()
+        if (currentTime - lastTimeout >= interval) {
+            func(args)
+            lastTimeout = currentTime;
+        }
+    }
 }
+
+function onScroll(event) {
+    // Handle scroll event  
+    console.log("Scroll event:", event);
+}
+
+const throttledScrollHandler = throttle(onScroll, 3000);
+
+window.addEventListener("scroll", throttledScrollHandler);
+
+
+// #6
+const curry = (func, arity) => {
+    return function curried(...args) {
+        if (args.length >= arity) {
+            return func(...args);
+        } else {
+            return function(...args2) {
+                return curried(...args.concat(args2))
+            }
+        }
+    }
+}
+
+function multiply(a, b, c) {
+    return a * b * c;
+}
+
+const curriedMultiply = curry(multiply, 3);
+
+const step1 = curriedMultiply(2); // Returns a curried function  
+const step2 = step1(3); // Returns a curried function  
+const result = step2(4); // Returns the final result: 2 * 3 * 4 = 24  
+
+console.log("Result:", result); // Expected: 24
