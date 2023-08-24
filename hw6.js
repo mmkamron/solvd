@@ -65,8 +65,10 @@ const mergeSort = (arr) => {
     return merge(left, right)
 }
 
+// Array unsorted
+// When there are over ~100 random elements in an array, QuickSort and Merge Sort start to consistently outperform BubbleSort
 console.log("Quicksort:")
-for (i = 100; i <= 100000; i *= 10) {
+for (i = 10; i <= 10000; i *= 10) {
     let array = randomArray(i)
     const start = performance.now()
     quicksort(array)
@@ -74,7 +76,7 @@ for (i = 100; i <= 100000; i *= 10) {
     console.log((end - start).toFixed(2) + 'ms')
 }
 console.log("\nBubble sort:")
-for (i = 100; i <= 100000; i *= 3) {
+for (i = 10; i <= 10000; i *= 10) {
     let array = randomArray(i)
     const start = performance.now()
     bubbleSort(array)
@@ -82,10 +84,62 @@ for (i = 100; i <= 100000; i *= 3) {
     console.log((end - start).toFixed(2) + 'ms')
 }
 console.log("\nMerge sort:")
-for (i = 100; i <= 100000; i *= 10) {
+for (i = 10; i <= 10000; i *= 10) {
     let array = randomArray(i)
     const start = performance.now()
     mergeSort(array)
     const end = performance.now()
     console.log((end - start).toFixed(2) + 'ms')
 }
+
+// Array sorted
+// console.log("\nQuicksort:")
+// for (i = 10; i <= 1000; i *= 10) {
+//     let array = randomArray(i).sort()
+//     const start = performance.now()
+//     quicksort(array)
+//     const end = performance.now()
+//     console.log((end - start).toFixed(2) + 'ms')
+// }
+// console.log("\nBubble sort:")
+// for (i = 10; i <= 10000; i *= 10) {
+//     let array = randomArray(i).sort()
+//     const start = performance.now()
+//     bubbleSort(array)
+//     const end = performance.now()
+//     console.log((end - start).toFixed(2) + 'ms')
+// }
+// console.log("\nMerge sort:")
+// for (i = 10; i <= 10000; i *= 10) {
+//     let array = randomArray(i).sort()
+//     const start = performance.now()
+//     mergeSort(array)
+//     const end = performance.now()
+//     console.log((end - start).toFixed(2) + 'ms')
+// }
+//
+// // Array sorted backwards
+// console.log("\nQuicksort:")
+// for (i = 10; i <= 10000; i *= 10) {
+//     let array = randomArray(i).sort((a, b) => b - a)
+//     const start = performance.now()
+//     quicksort(array)
+//     const end = performance.now()
+//     console.log((end - start).toFixed(2) + 'ms')
+// }
+// console.log("\nBubble sort:")
+// for (i = 10; i <= 10000; i *= 10) {
+//     let array = randomArray(i).sort((a, b) => b - a)
+//     const start = performance.now()
+//     bubbleSort(array)
+//     const end = performance.now()
+//     console.log((end - start).toFixed(2) + 'ms')
+// }
+// console.log("\nMerge sort:")
+// for (i = 10; i <= 10000; i *= 10) {
+//     let array = randomArray(i).sort((a, b) => b - a)
+//     const start = performance.now()
+//     mergeSort(array)
+//     const end = performance.now()
+//     console.log((end - start).toFixed(2) + 'ms')
+// }
