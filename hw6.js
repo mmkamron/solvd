@@ -65,81 +65,85 @@ const mergeSort = (arr) => {
     return merge(left, right)
 }
 
-// Array unsorted
-// When there are over ~100 random elements in an array, QuickSort and Merge Sort start to consistently outperform BubbleSort
-console.log("Quicksort:")
-for (i = 10; i <= 10000; i *= 10) {
-    let array = randomArray(i)
-    const start = performance.now()
-    quicksort(array)
+const measure = (sortFn, array) => {
+    const start = performance.now();
+    sortFn(array)
     const end = performance.now()
-    console.log((end - start).toFixed(2) + 'ms')
-}
-console.log("\nBubble sort:")
-for (i = 10; i <= 10000; i *= 10) {
-    let array = randomArray(i)
-    const start = performance.now()
-    bubbleSort(array)
-    const end = performance.now()
-    console.log((end - start).toFixed(2) + 'ms')
-}
-console.log("\nMerge sort:")
-for (i = 10; i <= 10000; i *= 10) {
-    let array = randomArray(i)
-    const start = performance.now()
-    mergeSort(array)
-    const end = performance.now()
-    console.log((end - start).toFixed(2) + 'ms')
+    return (end - start).toFixed(2) + 'ms'
 }
 
-// Array sorted
-// console.log("\nQuicksort:")
-// for (i = 10; i <= 1000; i *= 10) {
-//     let array = randomArray(i).sort()
-//     const start = performance.now()
-//     quicksort(array)
-//     const end = performance.now()
-//     console.log((end - start).toFixed(2) + 'ms')
-// }
-// console.log("\nBubble sort:")
-// for (i = 10; i <= 10000; i *= 10) {
-//     let array = randomArray(i).sort()
-//     const start = performance.now()
-//     bubbleSort(array)
-//     const end = performance.now()
-//     console.log((end - start).toFixed(2) + 'ms')
-// }
-// console.log("\nMerge sort:")
-// for (i = 10; i <= 10000; i *= 10) {
-//     let array = randomArray(i).sort()
-//     const start = performance.now()
-//     mergeSort(array)
-//     const end = performance.now()
-//     console.log((end - start).toFixed(2) + 'ms')
-// }
-//
-// // Array sorted backwards
-// console.log("\nQuicksort:")
-// for (i = 10; i <= 10000; i *= 10) {
-//     let array = randomArray(i).sort((a, b) => b - a)
-//     const start = performance.now()
-//     quicksort(array)
-//     const end = performance.now()
-//     console.log((end - start).toFixed(2) + 'ms')
-// }
-// console.log("\nBubble sort:")
-// for (i = 10; i <= 10000; i *= 10) {
-//     let array = randomArray(i).sort((a, b) => b - a)
-//     const start = performance.now()
-//     bubbleSort(array)
-//     const end = performance.now()
-//     console.log((end - start).toFixed(2) + 'ms')
-// }
-// console.log("\nMerge sort:")
-// for (i = 10; i <= 10000; i *= 10) {
-//     let array = randomArray(i).sort((a, b) => b - a)
-//     const start = performance.now()
-//     mergeSort(array)
-//     const end = performance.now()
-//     console.log((end - start).toFixed(2) + 'ms')
-// }
+// Array unsorted
+// When there are over ~50 random elements in an array, QuickSort and Merge Sort start to consistently outperform BubbleSort
+const arrayLength = [10, 50, 70, 100, 200, 500, 1000, 3000]
+
+const sortedArrayResults = [
+    ["Sorted Array"],
+    ["Array Length", "QuickSort Time", "BubbleSort Time", "Merge Sort Time"],
+];
+
+function arrayToString(arr, tSize) {
+    let s = "";
+    let sep = "\t".repeat(tSize);
+    for (let item of arr) {
+        s += item + sep;
+    }
+    return s
+}
+
+let title = arrayToString(sortedArrayResults[1], 2)
+console.log(title)
+console.log('\nRandom Array:\n')
+
+for (let length of arrayLength) {
+    let array = randomArray(length)
+    
+    let sorts = [quicksort, bubbleSort, mergeSort];
+    let results = [length];
+
+    for(let sort of sorts) {
+        results.push(measure(sort, array))
+    }
+
+    let result = arrayToString(results, 3)
+    console.log(result)
+}
+
+console.log('\nSorted Array:\n')
+
+
+for (let length of arrayLength) {
+    let array = randomArray(length).sort()
+    
+    let sorts = [quicksort, bubbleSort, mergeSort];
+    let results = [length];
+
+    for(let sort of sorts) {
+        results.push(measure(sort, array))
+    }
+
+    let result = arrayToString(results, 3)
+    console.log(result)
+}
+
+
+console.log('\nBackward Array:\n')
+
+for (let length of arrayLength) {
+    let array = randomArray(length).sort((a, b) => b - a)
+    
+    let sorts = [quicksort, bubbleSort, mergeSort];
+    let results = [length];
+
+    for(let sort of sorts) {
+        results.push(measure(sort, array))
+    }
+
+    let result = arrayToString(results, 3)
+    console.log(result)
+}
+
+/* Conclusions
+When the array is sorted or array size is small Bubble sort is faster. Otherwise, Quicksort or Mergesort is preferred.
+
+Quicksort and mergesort both use divide and conquer approaches. Quicksort's speed depends on pivot, while Mergesort offers predictable performance. 
+*/
