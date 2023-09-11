@@ -14,12 +14,20 @@ class Book {
 }
 
 class FictionBook extends Book {
+    constructor(title, author, isbn, price, availability) {
+        super(title, author, isbn, price, availability);
+    }
+
     getType() {
         return "Fiction"
     }
 }
 
 class NonFictionBook extends Book {
+    constructor(title, author, isbn, price, availability) {
+        super(title, author, isbn, price, availability);
+    }
+
     getType() {
         return "Non-Fiction"
     }
