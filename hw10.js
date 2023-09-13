@@ -1,21 +1,27 @@
 class Stack {
     constructor() {
-        this.arr = []
+        this.arr = [];
     }
+
+    // push adds the element onto the stack
     push(elem) {
         this.arr.push(elem);
     }
+
+    // pop removes and returns the top element from the stack
     pop() {
         if (this.arr.length === 0) {
-            return "stack is empty"
+            return "stack is empty";
         }
-        return this.arr.pop()
+        return this.arr.pop();
     }
+
+    // peek returns the top element of the stack without removing it
     peek() {
         if (this.arr.length === 0) {
-            return "stack is empty"
+            return "stack is empty";
         }
-        return this.arr[this.arr.length - 1]
+        return this.arr[this.arr.length - 1];
     }
 }
 
@@ -29,23 +35,31 @@ class Stack {
 
 class Queue {
     constructor() {
-        this.arr = []
+        this.arr = [];
     }
+
+    // enqueue adds an element to the back of the queue
     enqueue(elem) {
-        this.arr.push(elem)
+        this.arr.push(elem);
     }
+
+    // dequeue removes and returns the front element from the queue
     dequeue() {
         if (this.arr.length === 0) {
-            return "queue is empty"
+            return "queue is empty";
         }
-        return this.arr.shift()
+        return this.arr.shift();
     }
+
+    // peek returns the front element of the queue without removing it
     peek() {
         if (this.arr.length === 0) {
-            return "queue is empty"
+            return "queue is empty";
         }
-        return this.arr[0]
+        return this.arr[0];
     }
+
+    // toArray converts the queue into an array
     toArray() {
         return [...this.arr];
     }
@@ -74,39 +88,43 @@ class TreeNode {
 
 class BinaryTree {
     constructor() {
-        this.root = null
+        this.root = null;
     }
 
+    // Inserts an element into the binary tree while maintaining the Binary Search Tree (BST) property.
     insert(elem) {
         const node = new TreeNode(elem);
 
         if (!this.root) {
-            this.root = node
+            this.root = node;
         } else {
-            this._insertRecursively(this.root, node)
+            this._insertRecursively(this.root, node);
         }
     }
 
+    // Recursively inserts a node into the binary tree based on its value.
     _insertRecursively(current, node) {
         if (node.value < current.value) {
             if (current.left === null) {
                 current.left = node;
             } else {
-                this._insertRecursively(current.left, node)
+                this._insertRecursively(current.left, node);
             }
         } else {
             if (current.right === null) {
-                current.right = node
+                current.right = node;
             } else {
-                this._insertRecursively(current.right, node)
+                this._insertRecursively(current.right, node);
             }
         }
     }
 
+    // Searches for an element in the binary tree.
     search(elem) {
         return this._searchRecursively(this.root, elem);
     }
 
+    // Recursively searches for an element in the binary tree.
     _searchRecursively(current, elem) {
         if (!current) {
             return null;
@@ -115,32 +133,36 @@ class BinaryTree {
         if (elem === current.value) {
             return current;
         } else if (elem < current.value) {
-            return this._searchRecursively(current.left, elem)
+            return this._searchRecursively(current.left, elem);
         } else {
-            return this._searchRecursively(current.right, elem)
+            return this._searchRecursively(current.right, elem);
         }
     }
 
+    // Performs an in-order traversal of the tree.
     inOrderTraversal() {
         const result = [];
         this._inOrder(this.root, result);
         return result;
     }
 
+    // Helper function for in-order traversal.
     _inOrder(node, result) {
         if (node !== null) {
             this._inOrder(node.left, result);
-            result.push(node.value)
-            this._inOrder(node.right, result)
+            result.push(node.value);
+            this._inOrder(node.right, result);
         }
     }
 
+    // Performs an pre-order traversal of the tree.
     preOrderTraversal() {
         const result = [];
         this._preOrder(this.root, result);
         return result
     }
 
+    // Helper function for pre-order traversal.
     _preOrder(node, result) {
         if (node !== null) {
             result.push(node.value);
@@ -149,12 +171,14 @@ class BinaryTree {
         }
     }
 
+    // Performs an post-order traversal of the tree.
     postOrderTraversal() {
         const result = [];
         this._postOrder(this.root, result)
         return result;
     }
 
+    // Helper function for post-order traversal.
     _postOrder(node, result) {
         if (node !== null) {
             this._postOrder(node.left, result)
@@ -183,12 +207,14 @@ class Graph {
         this.adjacencyList = {};
     }
 
+    // Adds a vertex to the graph.
     addVertex(vertex) {
         if (!this.adjacencyList[vertex]) {
             this.adjacencyList[vertex] = [];
         }
     }
 
+    // Adds an edge between two vertices in the graph.
     addEdge(vertex1, vertex2) {
         if (this.adjacencyList[vertex1] && this.adjacencyList[vertex2]) {
             this.adjacencyList[vertex1].push(vertex2);
@@ -196,6 +222,7 @@ class Graph {
         }
     }
 
+    // Performs Depth-First Search (DFS) starting from a specified vertex.
     dfs(startVertex) {
         const visited = {};
         const result = [];
@@ -216,6 +243,7 @@ class Graph {
         return result;
     }
 
+    // Performs Breadth-First Search (BFS) starting from a specified vertex.
     bfs(startVertex) {
         const queue = [startVertex];
         const visited = {};
@@ -238,6 +266,7 @@ class Graph {
         return result;
     }
 
+    // Finds the shortest path between two vertices using Dijkstra's algorithm.
     dijkstra(startVertex, endVertex) {
         const distances = {};
         const previous = {};
@@ -312,42 +341,49 @@ class LinkedList {
     constructor() {
         this.head = null
     }
+    // Inserts a new element at the end of the linked list.
     insert(elem) {
-        const node = new ListNode(elem)
+        const node = new ListNode(elem);
         if (!this.head) {
-            this.head = node
+            this.head = node;
         } else {
             let current = this.head;
             while (current.next) {
-                current = current.next
+                current = current.next;
             }
-            current.next = node
+            current.next = node;
         }
     }
+
+    // Deletes the first occurrence of a specified element from the linked list.
     delete(elem) {
-        const node = new ListNode(elem)
+        const node = new ListNode(elem);
         if (!this.head) {
-            return "list is empty"
+            return "list is empty";
         } else if (this.head.data === elem) {
-            this.head = this.head.next
+            this.head = this.head.next;
         } else {
-            let current = this.head
+            let current = this.head;
             while (current.next.data !== elem) {
-                current = current.next
+                current = current.next;
             }
-            current.next = current.next.next
+            current.next = current.next.next;
         }
     }
+
+    // Searches for a specified element in the linked list.
     search(elem) {
         let current = this.head;
         while (current) {
             if (current.data === elem) {
-                return current.data;
+                return current.data; 
             }
             current = current.next;
         }
-        return null;
+        return null; 
     }
+
+    // Converts the linked list to an array and returns the array.
     toArray() {
         const result = [];
         let current = this.head;
@@ -381,6 +417,7 @@ class MinMaxStack {
         this.maxStack = []
     }
 
+    // Pushes an element onto the stack and updates minStack and maxStack if necessary.
     push(elem) {
         this.stack.push(elem)
 
@@ -393,6 +430,7 @@ class MinMaxStack {
         }
     }
 
+    // Pops the top element from the stack and updates minStack and maxStack if necessary.
     pop() {
         if (this.stack.length === 0) {
             return "stack is empty"
@@ -409,6 +447,7 @@ class MinMaxStack {
         return poppedElem;
     }
 
+    // Returns the minimum element in the stack.
     getMin() {
         if (this.minStack.length === 0) {
             return "minStack is empty";
@@ -416,6 +455,7 @@ class MinMaxStack {
         return this.minStack[this.minStack.length - 1]
     }
 
+    // Returns the maximum element in the stack.
     getMax() {
         if (this.maxStack.length === 0) {
             return "maxStack is empty";
