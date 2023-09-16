@@ -11,7 +11,7 @@ class Stack {
     // pop removes and returns the top element from the stack
     pop() {
         if (this.arr.length === 0) {
-            return "stack is empty";
+            throw new Error("stack is empty")
         }
         return this.arr.pop();
     }
@@ -19,7 +19,7 @@ class Stack {
     // peek returns the top element of the stack without removing it
     peek() {
         if (this.arr.length === 0) {
-            return "stack is empty";
+            throw new Error("stack is empty")
         }
         return this.arr[this.arr.length - 1];
     }
@@ -311,6 +311,28 @@ class Graph {
 
         return null;
     }
+
+    // Finds the shortest path between two vertices using modified BFS.
+    findShortestPathBFS(startVertex, endVertex) {
+        const queue = [{ vertex: startVertex, path: [startVertex] }];
+        const visited = {};
+
+        while (queue.length) {
+            const { vertex, path } = queue.shift();
+            if (vertex === endVertex) {
+                return path;
+            }
+            visited[vertex] = true;
+            for (let neighbor of this.adjacencyList[vertex]) {
+                if (!visited[neighbor]) {
+                    const newPath = [...path, neighbor];
+                    queue.push({ vertex: neighbor, path: newPath });
+                    visited[neighbor] = true;
+                }
+            }
+        }
+        return null;
+    }
 }
 
 // const graph = new Graph();
@@ -329,6 +351,7 @@ class Graph {
 //
 // console.log("DFS:", graph.dfs('A'))
 // console.log("BFS:", graph.bfs('A'))
+// console.log("BFS:", graph.findShortestPathBFS('A', 'D'))
 
 class ListNode {
     constructor(elem) {
@@ -359,15 +382,20 @@ class LinkedList {
     delete(elem) {
         const node = new ListNode(elem);
         if (!this.head) {
-            return "list is empty";
+            throw new Error("The list is empty")
         } else if (this.head.data === elem) {
             this.head = this.head.next;
+            return
         } else {
             let current = this.head;
-            while (current.next.data !== elem) {
+            while (current.next) {
+                if (current.next.data === elem) {
+                    current.next = current.next.next;
+                    return;
+                }
                 current = current.next;
             }
-            current.next = current.next.next;
+            console.error(`${elem} is not found in the list`);
         }
     }
 
@@ -376,11 +404,11 @@ class LinkedList {
         let current = this.head;
         while (current) {
             if (current.data === elem) {
-                return current.data; 
+                return current.data;
             }
             current = current.next;
         }
-        return null; 
+        return null;
     }
 
     // Converts the linked list to an array and returns the array.
@@ -402,6 +430,7 @@ class LinkedList {
 //
 // console.log("Linked List:", linkedList.toArray());
 //
+// linkedList.delete(4);
 // linkedList.delete(2);
 // console.log("Linked List after deletion:", linkedList.toArray());
 //
@@ -433,7 +462,7 @@ class MinMaxStack {
     // Pops the top element from the stack and updates minStack and maxStack if necessary.
     pop() {
         if (this.stack.length === 0) {
-            return "stack is empty"
+            throw new Error("Stack is empty")
         }
 
         const poppedElem = this.stack.pop()
@@ -450,7 +479,7 @@ class MinMaxStack {
     // Returns the minimum element in the stack.
     getMin() {
         if (this.minStack.length === 0) {
-            return "minStack is empty";
+            throw new Error("minStack is empty")
         }
         return this.minStack[this.minStack.length - 1]
     }
@@ -458,7 +487,7 @@ class MinMaxStack {
     // Returns the maximum element in the stack.
     getMax() {
         if (this.maxStack.length === 0) {
-            return "maxStack is empty";
+            throw new Error("maxStack is empty")
         }
         return this.maxStack[this.maxStack.length - 1]
     }
